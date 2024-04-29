@@ -1,0 +1,19 @@
+{
+  "name": "fus3-app",
+  "version": "1.0.0",
+  "description": "S3 file uploader",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/leaflet": "^1.9.11",
+    "electron": "^28.2.3"
+  },
+  "dependencies": {
+    "leaflet": "^1.9.4"
+  }
+}
