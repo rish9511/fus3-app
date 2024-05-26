@@ -14,10 +14,10 @@
 //   createWindow()
 // })
 
-import "./node_modules/l.movemarker"
+// import "./node_modules/l.movemarker"
 
 console.log("running main.js file")
-const map = L.map('map').setView([51.505, -0.09], 13);
+const map = L.map('map').setView([51.505, -0.09], 15);
 
 const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
   maxZoom: 19,
@@ -66,9 +66,19 @@ var markerOptions = {
 }
 
 
-L.MoveMarker(
+const instance = L.moveMarker(
   [[51.5, -0.09], [51.50008749807709, -0.1257419586181641]],
   polylineOptions,
   markerOptions
-)
+).addTo(map)
+
+
+console.log(instance.getMarker())
+
+// instance.addMoreLine([-8.822512, 115.186803], {
+//   duration: 5000, // in milliseconds (optional)
+//   speed: 25, // in km/h (optional)
+//   rotateAngle: 141, // (required if rotateMarker enable)
+//   animatePolyline: true, // (required)
+// })
 
