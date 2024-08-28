@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option go_package = "google.golang.org/grpc/examples/route_guide/fuse_service";
+
+package fuse;
+
+service Fuse {
+    rpc ListBuckets(EmptyMessage) returns(Buckets) {}
+}
+
+message EmptyMessage {}
+
+message Bucket {
+    string name = 1;
+    string path = 2;
+}
+
+
+message Buckets {
+    repeated Bucket allBuckets = 1;
+}
