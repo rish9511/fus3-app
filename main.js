@@ -9,12 +9,15 @@
 
 //   win.loadFile('index.html')
 // }
-
 // app.whenReady().then(() => {
+
 //   createWindow()
 // })
 
 // import "./node_modules/l.movemarker"
+
+import L from "leaflet"
+import "l.movemarker"
 
 console.log("running main.js file")
 const map = L.map('map').setView([51.505, -0.09], 15);
@@ -52,7 +55,6 @@ var aws_bucket_icon_2 = L.icon({
 
 L.marker([51.5, -0.09], {icon: aws_bucket_icon}).addTo(map);
 
-
 L.marker([51.50008749807709, -0.1257419586181641], {icon: aws_bucket_icon_2}).addTo(map);
 
 var polylineOptions = {
@@ -75,10 +77,32 @@ const instance = L.moveMarker(
 
 console.log(instance.getMarker())
 
+
+
+const { EmptyMessage } = require('./fuse_service/example_pb.js');
+const { FuseClient } = require('./fuse_service/example_grpc_web_pb.js');
+
+var client = new FuseClient('http://localhost:8080');
+
+var emptyMessage = new EmptyMessage();
+
+client.listBuckets(emptyMessage, {}, (err, response) => {
+  if (err) {
+    console.error('Error:', err);
+  } else {
+    console.log('Response:', response);
+  }
+});
+
+
+
+
 // instance.addMoreLine([-8.822512, 115.186803], {
 //   duration: 5000, // in milliseconds (optional)
 //   speed: 25, // in km/h (optional)
 //   rotateAngle: 141, // (required if rotateMarker enable)
 //   animatePolyline: true, // (required)
 // })
+
+
 
