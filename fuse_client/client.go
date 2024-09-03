@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"log"
 
+	pb "github.com/rish9511/fus3-app/fuse_service"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
-	pb "google.golang.org/grpc/examples/route_guide/fuse_service" // Replace with the actual import path
 )
 
 var (

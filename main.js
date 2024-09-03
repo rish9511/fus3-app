@@ -79,8 +79,8 @@ console.log(instance.getMarker())
 
 
 
-const { EmptyMessage } = require('./fuse_service/example_pb.js');
-const { FuseClient } = require('./fuse_service/example_grpc_web_pb.js');
+const { EmptyMessage } = require('./fuse_service/fuseservice_pb.js');
+const { FuseClient } = require('./fuse_service/fuseservice_grpc_web_pb.js');
 
 var client = new FuseClient('http://localhost:8080');
 

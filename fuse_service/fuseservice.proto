@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option go_package = "google.golang.org/grpc/examples/route_guide/fuse_service";
+option go_package = "github.com/rish9511/fus3-app/fuse_service/fuseservice";
 
 package fuse;
 

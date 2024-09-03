@@ -2,9 +2,9 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v5.27.3
-// source: example.proto
+// source: fuse_service/fuseservice.proto
 
-package fuse_service
+package fuseservice
 
 import (
 	context "context"
@@ -117,5 +117,5 @@ var Fuse_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "example.proto",
+	Metadata: "fuse_service/fuseservice.proto",
 }

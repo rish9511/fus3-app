@@ -2029,7 +2029,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 // versions:
 // 	protoc-gen-grpc-web v1.5.0
 // 	protoc              v5.27.3
-// source: example.proto
+// source: fuseservice.proto
 
 
 /* eslint-disable */
@@ -2041,7 +2041,7 @@ const grpc = {};
 grpc.web = require('grpc-web');
 
 const proto = {};
-proto.fuse = require('./example_pb.js');
+proto.fuse = require('./fuseservice_pb.js');
 
 /**
  * @param {string} hostname
@@ -2159,8 +2159,8 @@ proto.fuse.FusePromiseClient.prototype.listBuckets =
 module.exports = proto.fuse;
 
 
-},{"./example_pb.js":5,"grpc-web":8}],5:[function(require,module,exports){
-// source: example.proto
+},{"./fuseservice_pb.js":5,"grpc-web":8}],5:[function(require,module,exports){
+// source: fuseservice.proto
 /**
  * @fileoverview
  * @enhanceable
@@ -2749,10 +2749,10 @@ const instance = _leaflet.default.moveMarker([[51.5, -0.09], [51.50008749807709,
 console.log(instance.getMarker());
 const {
   EmptyMessage
-} = require('./fuse_service/example_pb.js');
+} = require('./fuse_service/fuseservice_pb.js');
 const {
   FuseClient
-} = require('./fuse_service/example_grpc_web_pb.js');
+} = require('./fuse_service/fuseservice_grpc_web_pb.js');
 var client = new FuseClient('http://localhost:8080');
 var emptyMessage = new EmptyMessage();
 client.listBuckets(emptyMessage, {}, (err, response) => {
@@ -2770,7 +2770,7 @@ client.listBuckets(emptyMessage, {}, (err, response) => {
 //   animatePolyline: true, // (required)
 // })
 
-},{"./fuse_service/example_grpc_web_pb.js":4,"./fuse_service/example_pb.js":5,"l.movemarker":9,"leaflet":10}],7:[function(require,module,exports){
+},{"./fuse_service/fuseservice_grpc_web_pb.js":4,"./fuse_service/fuseservice_pb.js":5,"l.movemarker":9,"leaflet":10}],7:[function(require,module,exports){
 (function (global,Buffer){(function (){
 "use strict";
 

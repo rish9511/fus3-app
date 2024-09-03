@@ -1,4 +1,4 @@
-// source: example.proto
+// source: fuseservice.proto
 /**
  * @fileoverview
  * @enhanceable

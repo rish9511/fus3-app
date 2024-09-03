@@ -8,7 +8,7 @@
 // versions:
 // 	protoc-gen-grpc-web v1.5.0
 // 	protoc              v5.27.3
-// source: example.proto
+// source: fuseservice.proto
 
 
 /* eslint-disable */
@@ -20,7 +20,7 @@ const grpc = {};
 grpc.web = require('grpc-web');
 
 const proto = {};
-proto.fuse = require('./example_pb.js');
+proto.fuse = require('./fuseservice_pb.js');
 
 /**
  * @param {string} hostname

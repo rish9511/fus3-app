@@ -6,8 +6,8 @@ import (
 	"log"
 	"net"
 
+	pb "github.com/rish9511/fus3-app/fuse_service"
 	"google.golang.org/grpc"
-	pb "google.golang.org/grpc/fuse_service"
 )
 
 type FuseServer struct {
@@ -16,6 +16,7 @@ type FuseServer struct {
 
 func (f *FuseServer) ListBuckets(ctx context.Context, em *pb.EmptyMessage) (*pb.Buckets, error) {
 
+	fmt.Println("Received request")
 	b1 := pb.Bucket{
 		Name: "tempBucket",
 	}
