@@ -9,7 +9,7 @@ require (
 	go.opentelemetry.io/otel/sdk/metric v1.27.0
 	golang.org/x/oauth2 v0.20.0
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240528184218-531527333157
-	google.golang.org/grpc v1.64.0
+	google.golang.org/grpc v1.66.0
 	google.golang.org/grpc/gcp/observability v1.0.1
 	google.golang.org/grpc/stats/opentelemetry v0.0.0-20240604165302-6d236200ea68
 	google.golang.org/protobuf v1.34.1
@@ -77,6 +77,6 @@ require (
 	google.golang.org/grpc/stats/opencensus v1.0.0 // indirect
 )
 
-replace google.golang.org/grpc => ../
+replace google.golang.org/grpc => ./
 
-replace google.golang.org/grpc/stats/opentelemetry => ../stats/opentelemetry
+// replace google.golang.org/grpc/stats/opentelemetry => ../stats/opentelemetry

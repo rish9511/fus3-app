@@ -7,8 +7,7 @@ import (
 	"net"
 
 	"google.golang.org/grpc"
-
-	pb "google.golang.org/grpc/examples/route_guide/fuse_service"
+	pb "google.golang.org/grpc/fuse_service"
 )
 
 type FuseServer struct {
