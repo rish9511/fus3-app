@@ -35,6 +35,9 @@ window.addEventListener('load', async function(event) {
     .then(buckets => {
       buckets.forEach(bucket => {
         console.log(bucket.getName())
+        var location = bucket.getLocation()
+        console.log(location.getLatitude())
+        console.log(location.getLongitude())
       })
     })
     .catch(err => {

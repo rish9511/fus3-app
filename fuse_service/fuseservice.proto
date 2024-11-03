@@ -10,9 +10,15 @@ service Fuse {
 
 message EmptyMessage {}
 
+message Location {
+    int32 latitude = 1;
+    int32 longitude = 2;
+}
+
 message Bucket {
     string name = 1;
     string path = 2;
+    Location location = 3;
 }
 
 
