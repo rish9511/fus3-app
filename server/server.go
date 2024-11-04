@@ -31,17 +31,19 @@ func loadStaticBuckets() []*pb.Bucket {
 	b1 := pb.Bucket{
 		Name: "b1",
 		Path: "/buckets/b1",
+		// 36.87962060502676 -99.140625
 		Location: &pb.Location{
-			Latitude:  123213,
-			Longitude: 123123213,
+			Latitude:  36.87962060502676,
+			Longitude: -99.140625,
 		},
 	}
 	b2 := pb.Bucket{
 		Name: "b2",
 		Path: "/buckets/b2",
+		// 20.632784250388028 78.92578125000001
 		Location: &pb.Location{
-			Latitude:  123213,
-			Longitude: 123123213,
+			Latitude:  20.632784250388028,
+			Longitude: 78.92578125000001,
 		},
 	}
 	b3 := pb.Bucket{

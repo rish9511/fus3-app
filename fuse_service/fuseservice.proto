@@ -11,8 +11,8 @@ service Fuse {
 message EmptyMessage {}
 
 message Location {
-    int32 latitude = 1;
-    int32 longitude = 2;
+    float latitude = 1;
+    float longitude = 2;
 }
 
 message Bucket {

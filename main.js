@@ -1,5 +1,5 @@
 // es6 style
-import L from "leaflet"
+import L, { map } from "leaflet"
 // import "./node_modules/l.movemarker"
 
 // common js. why const ? // TODO: Common js syntax does not work
@@ -13,7 +13,7 @@ window.addEventListener('DOMContentLoaded', function(event) {
 
 window.addEventListener('load', async function(event) {
   console.log("Loaded everything")
-  const map = L.map('map', {
+  const mainMap = L.map('map', {
     center: L.latLng(0, 30),
     zoom: 3,
     minZoom: 3,
@@ -22,8 +22,11 @@ window.addEventListener('load', async function(event) {
 
   const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-  }).addTo(map);
+  }).addTo(mainMap);
 
+  mainMap.on('click', function(e) {
+    console.log(e.latlng.lat, e.latlng.lng)
+  });
   // const response = await getBuckets()
   // console.log(response)
   // const allBuckets = response.getAllbucketsList()
@@ -38,6 +41,15 @@ window.addEventListener('load', async function(event) {
         var location = bucket.getLocation()
         console.log(location.getLatitude())
         console.log(location.getLongitude())
+        var bucketIcon = L.icon({
+            iconUrl: 'aws-s3.svg',
+            iconSize:     [38, 95], // size of the icon
+            shadowSize:   [50, 64], // size of the shadow
+            iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+            shadowAnchor: [4, 62],  // the same for the shadow
+            popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+        });
+        L.marker([location.getLatitude(), location.getLongitude()], {icon: bucketIcon}).addTo(mainMap);
       })
     })
     .catch(err => {
@@ -86,7 +98,6 @@ async function getBuckets() {
   //   }
   // });
 }
-
 
 
 // var aws_bucket_icon = L.icon({
