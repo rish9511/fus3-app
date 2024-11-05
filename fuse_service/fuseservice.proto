@@ -6,7 +6,9 @@ package fuse;
 
 service Fuse {
     rpc ListBuckets(EmptyMessage) returns(Buckets) {}
+    rpc CopyFile(FileTransferInput) returns(stream FileTransferOutput) {}
 }
+
 
 message EmptyMessage {}
 
@@ -21,6 +23,14 @@ message Bucket {
     Location location = 3;
 }
 
+message FileTransferInput {
+    string sourcePath = 1;
+    string destinationPath = 2;
+}
+
+message FileTransferOutput {
+    int32 bytesTransferred = 1;
+}
 
 message Buckets {
     repeated Bucket allBuckets = 1;

@@ -135,5 +135,61 @@ proto.fuse.FusePromiseClient.prototype.listBuckets =
 };
 
 
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.fuse.FileTransferInput,
+ *   !proto.fuse.FileTransferOutput>}
+ */
+const methodDescriptor_Fuse_CopyFile = new grpc.web.MethodDescriptor(
+  '/fuse.Fuse/CopyFile',
+  grpc.web.MethodType.SERVER_STREAMING,
+  proto.fuse.FileTransferInput,
+  proto.fuse.FileTransferOutput,
+  /**
+   * @param {!proto.fuse.FileTransferInput} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.fuse.FileTransferOutput.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.fuse.FileTransferInput} request The request proto
+ * @param {?Object<string, string>=} metadata User defined
+ *     call metadata
+ * @return {!grpc.web.ClientReadableStream<!proto.fuse.FileTransferOutput>}
+ *     The XHR Node Readable Stream
+ */
+proto.fuse.FuseClient.prototype.copyFile =
+    function(request, metadata) {
+  return this.client_.serverStreaming(this.hostname_ +
+      '/fuse.Fuse/CopyFile',
+      request,
+      metadata || {},
+      methodDescriptor_Fuse_CopyFile);
+};
+
+
+/**
+ * @param {!proto.fuse.FileTransferInput} request The request proto
+ * @param {?Object<string, string>=} metadata User defined
+ *     call metadata
+ * @return {!grpc.web.ClientReadableStream<!proto.fuse.FileTransferOutput>}
+ *     The XHR Node Readable Stream
+ */
+proto.fuse.FusePromiseClient.prototype.copyFile =
+    function(request, metadata) {
+  return this.client_.serverStreaming(this.hostname_ +
+      '/fuse.Fuse/CopyFile',
+      request,
+      metadata || {},
+      methodDescriptor_Fuse_CopyFile);
+};
+
+
 module.exports = proto.fuse;
 

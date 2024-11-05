@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	Fuse_ListBuckets_FullMethodName = "/fuse.Fuse/ListBuckets"
+	Fuse_CopyFile_FullMethodName    = "/fuse.Fuse/CopyFile"
 )
 
 // FuseClient is the client API for Fuse service.
@@ -27,6 +28,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type FuseClient interface {
 	ListBuckets(ctx context.Context, in *EmptyMessage, opts ...grpc.CallOption) (*Buckets, error)
+	CopyFile(ctx context.Context, in *FileTransferInput, opts ...grpc.CallOption) (grpc.ServerStreamingClient[FileTransferOutput], error)
 }
 
 type fuseClient struct {
@@ -47,11 +49,31 @@ func (c *fuseClient) ListBuckets(ctx context.Context, in *EmptyMessage, opts ...
 	return out, nil
 }
 
+func (c *fuseClient) CopyFile(ctx context.Context, in *FileTransferInput, opts ...grpc.CallOption) (grpc.ServerStreamingClient[FileTransferOutput], error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &Fuse_ServiceDesc.Streams[0], Fuse_CopyFile_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &grpc.GenericClientStream[FileTransferInput, FileTransferOutput]{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type Fuse_CopyFileClient = grpc.ServerStreamingClient[FileTransferOutput]
+
 // FuseServer is the server API for Fuse service.
 // All implementations must embed UnimplementedFuseServer
 // for forward compatibility.
 type FuseServer interface {
 	ListBuckets(context.Context, *EmptyMessage) (*Buckets, error)
+	CopyFile(*FileTransferInput, grpc.ServerStreamingServer[FileTransferOutput]) error
 	mustEmbedUnimplementedFuseServer()
 }
 
@@ -64,6 +86,9 @@ type UnimplementedFuseServer struct{}
 
 func (UnimplementedFuseServer) ListBuckets(context.Context, *EmptyMessage) (*Buckets, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListBuckets not implemented")
+}
+func (UnimplementedFuseServer) CopyFile(*FileTransferInput, grpc.ServerStreamingServer[FileTransferOutput]) error {
+	return status.Errorf(codes.Unimplemented, "method CopyFile not implemented")
 }
 func (UnimplementedFuseServer) mustEmbedUnimplementedFuseServer() {}
 func (UnimplementedFuseServer) testEmbeddedByValue()              {}
@@ -104,6 +129,17 @@ func _Fuse_ListBuckets_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Fuse_CopyFile_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(FileTransferInput)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(FuseServer).CopyFile(m, &grpc.GenericServerStream[FileTransferInput, FileTransferOutput]{ServerStream: stream})
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type Fuse_CopyFileServer = grpc.ServerStreamingServer[FileTransferOutput]
+
 // Fuse_ServiceDesc is the grpc.ServiceDesc for Fuse service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -116,6 +152,12 @@ var Fuse_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Fuse_ListBuckets_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "CopyFile",
+			Handler:       _Fuse_CopyFile_Handler,
+			ServerStreams: true,
+		},
+	},
 	Metadata: "fuse_service/fuseservice.proto",
 }

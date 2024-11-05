@@ -26,6 +26,18 @@ func (f *FuseServer) ListBuckets(ctx context.Context, em *pb.EmptyMessage) (*pb.
 	}, nil
 
 }
+func (f *FuseServer) CopyFile(in *pb.FileTransferInput, out grpc.ServerStreamingServer[pb.FileTransferOutput]) error {
+
+	fmt.Println("Start copying file")
+
+	output := &pb.FileTransferOutput{
+		BytesTransferred: 100,
+	}
+	if err := out.Send(output); err != nil {
+		return err
+	}
+	return nil
+}
 
 func loadStaticBuckets() []*pb.Bucket {
 	b1 := pb.Bucket{
