@@ -29,7 +29,8 @@ message FileTransferInput {
 }
 
 message FileTransferOutput {
-    int32 bytesTransferred = 1;
+    int64 bytesTransferred = 1;
+    double timeRequired     = 2;
 }
 
 message Buckets {

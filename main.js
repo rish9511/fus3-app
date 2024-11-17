@@ -1,6 +1,6 @@
 // es6 style
 import L, { map } from "leaflet"
-// import "./node_modules/l.movemarker"
+import "./node_modules/l.movemarker"
 
 const { EmptyMessage, FileTransferInput, FileTransferOutput } = require('./fuse_service/fuseservice_pb.js');
 const { FuseClient, FusePromiseClient } = require('./fuse_service/fuseservice_grpc_web_pb.js');
@@ -56,13 +56,38 @@ window.addEventListener('load', async function(event) {
         console.log("Click on map")
         var client = new FuseClient('http://localhost:8080');
         var transferInput = new FileTransferInput()
-        transferInput.setSourcepath("/buckets/b1/file_path")
-        transferInput.setDestinationpath("/buckets/b2/file_path")
+        transferInput.setSourcepath("/home/zboon/satya.mkv")
+        transferInput.setDestinationpath("/home/zboon/buckets/b2/satya.mkv")
         var stream = client.copyFile(transferInput, {})
-        stream.on('data', (response) => {
-          console.log('response from server ', response)
-        });
+        var totalBytesTransferred = 0
+        
+        var opts = {
+          duration: 100000 // start at a slow speed
+        }
+        var latLngs = [[36.87962060502676, -99.140625], [20.632784250388028, 78.92578125000001]] 
+        var motionInstance = L.motionMarker(latLngs, opts)
+        var polyLine = L.polyline(latLngs)
+        motionInstance.addTo(mainMap)
+        polyLine.addTo(mainMap)
 
+        stream.on('data', (response) => {
+          var bytesTransferred = response.getBytestransferred()
+          console.log('response from server ', bytesTransferred)
+          totalBytesTransferred += bytesTransferred
+          console.log(totalBytesTransferred)
+          if (totalBytesTransferred > 20000000) {
+            var duration = response.getTimerequired()
+            duration = duration * 1000 // convert to milliseconds
+            var options = {
+              duration: duration
+            }
+            var nextLatLng = [20.632784250388028, 78.92578125000001]
+            var currentLatLng = [motionInstance.getLatLng().lat, motionInstance.getLatLng().lng] 
+            motionInstance._prevLatLng = currentLatLng
+            motionInstance.moveTo(nextLatLng, options)
+          }
+        });
+        
         stream.on('status', (status) => {
           console.log(status.code)
         });
@@ -75,7 +100,6 @@ window.addEventListener('load', async function(event) {
           console.log('stream reached eof')
           stream.cancel()
         });
-
         
       });
 });
@@ -99,36 +123,3 @@ async function getBuckets() {
   }
 
 }
-
-
-
-// var polylineOptions = {
-//   animate: true,
-//   duration: 5000
-// }
-
-// var markerOptions = {
-//   animate: true,
-//   duration: 5000
-// }
-
-
-// const instance = L.moveMarker(
-//   [[51.5, -0.09], [51.50008749807709, -0.1257419586181641]],
-//   polylineOptions,
-//   markerOptions
-// ).addTo(map)
-
-
-// console.log(instance.getMarker())
-
-
-// instance.addMoreLine([-8.822512, 115.186803], {
-//   duration: 5000, // in milliseconds (optional)
-//   speed: 25, // in km/h (optional)
-//   rotateAngle: 141, // (required if rotateMarker enable)
-//   animatePolyline: true, // (required)
-// })
-
-
-

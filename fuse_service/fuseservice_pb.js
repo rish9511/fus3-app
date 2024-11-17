@@ -817,7 +817,8 @@ proto.fuse.FileTransferOutput.prototype.toObject = function(opt_includeInstance)
  */
 proto.fuse.FileTransferOutput.toObject = function(includeInstance, msg) {
   var f, obj = {
-    bytestransferred: jspb.Message.getFieldWithDefault(msg, 1, 0)
+    bytestransferred: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    timerequired: jspb.Message.getFloatingPointFieldWithDefault(msg, 2, 0.0)
   };
 
   if (includeInstance) {
@@ -855,8 +856,12 @@ proto.fuse.FileTransferOutput.deserializeBinaryFromReader = function(msg, reader
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {number} */ (reader.readInt32());
+      var value = /** @type {number} */ (reader.readInt64());
       msg.setBytestransferred(value);
+      break;
+    case 2:
+      var value = /** @type {number} */ (reader.readDouble());
+      msg.setTimerequired(value);
       break;
     default:
       reader.skipField();
@@ -889,8 +894,15 @@ proto.fuse.FileTransferOutput.serializeBinaryToWriter = function(message, writer
   var f = undefined;
   f = message.getBytestransferred();
   if (f !== 0) {
-    writer.writeInt32(
+    writer.writeInt64(
       1,
+      f
+    );
+  }
+  f = message.getTimerequired();
+  if (f !== 0.0) {
+    writer.writeDouble(
+      2,
       f
     );
   }
@@ -898,7 +910,7 @@ proto.fuse.FileTransferOutput.serializeBinaryToWriter = function(message, writer
 
 
 /**
- * optional int32 bytesTransferred = 1;
+ * optional int64 bytesTransferred = 1;
  * @return {number}
  */
 proto.fuse.FileTransferOutput.prototype.getBytestransferred = function() {
@@ -912,6 +924,24 @@ proto.fuse.FileTransferOutput.prototype.getBytestransferred = function() {
  */
 proto.fuse.FileTransferOutput.prototype.setBytestransferred = function(value) {
   return jspb.Message.setProto3IntField(this, 1, value);
+};
+
+
+/**
+ * optional double timeRequired = 2;
+ * @return {number}
+ */
+proto.fuse.FileTransferOutput.prototype.getTimerequired = function() {
+  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 2, 0.0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.fuse.FileTransferOutput} returns this
+ */
+proto.fuse.FileTransferOutput.prototype.setTimerequired = function(value) {
+  return jspb.Message.setProto3FloatField(this, 2, value);
 };
 
 
